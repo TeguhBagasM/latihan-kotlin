@@ -1,47 +1,26 @@
+// Titik masuk aplikasi yang menyiapkan penyimpanan user dan navigasi Compose.
 package com.example.latihankotlin
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.latihankotlin.data.UserStorage
+import com.example.latihankotlin.navigation.AppNavigation
 import com.example.latihankotlin.ui.theme.LatihanKotlinTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // UserStorage dibuat sekali di Activity dan dipakai oleh semua layar.
+        val userStorage = UserStorage(applicationContext)
+
         setContent {
             LatihanKotlinTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Teguh",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                AppNavigation(userStorage = userStorage)
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    LatihanKotlinTheme {
-        Greeting("Android")
     }
 }
